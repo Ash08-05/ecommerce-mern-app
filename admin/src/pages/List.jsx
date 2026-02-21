@@ -8,23 +8,25 @@ const List = ({ token }) => {
 
   const fetchList = async () => {
     try {
-      const response = await axios.post(
-  backendUrl + "/api/product/list",
-  formData,
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
-);
+      const response = await axios.get(
+        backendUrl + "/api/product/list",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.data.success) {
-        setList(response.data.products); // must match backend
+        setList(response.data.products);
       } else {
         toast.error(response.data.message);
       }
+
     } catch (error) {
-      toast.error(error.response?.data?.message || "Error fetching products");
+      toast.error(
+        error.response?.data?.message || "Error fetching products"
+      );
     }
   };
 
@@ -33,7 +35,11 @@ const List = ({ token }) => {
       const response = await axios.post(
         backendUrl + "/api/product/remove",
         { id },
-        { headers: { token } },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (response.data.success) {
@@ -42,14 +48,19 @@ const List = ({ token }) => {
       } else {
         toast.error(response.data.message);
       }
+
     } catch (error) {
-      toast.error("Delete failed");
+      toast.error(
+        error.response?.data?.message || "Delete failed"
+      );
     }
   };
 
   useEffect(() => {
-    fetchList();
-  }, []);
+    if (token) {
+      fetchList();
+    }
+  }, [token]);
 
   return (
     <div className="w-full px-6 py-8">
