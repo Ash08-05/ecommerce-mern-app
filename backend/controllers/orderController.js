@@ -55,7 +55,7 @@ const placeOrderStripe = async (req, res) => {
     const { items, amount, address } = req.body;
 
     // ✅ FIX: Get origin correctly
-    const origin = req.get("origin") || "http://localhost:5173";
+    const origin = req.get("origin") || "https://ecommerce-mern-app-frontend-y5b7.onrender.com";
 
     const orderData = {
       userId,
