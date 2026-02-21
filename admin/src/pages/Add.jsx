@@ -41,12 +41,14 @@ const Add = ({ token }) => {
       if (image4) formData.append("image4", image4);
 
       const response = await axios.post(
-        backendUrl + "/api/product/add",
-        formData,
-        {
-          headers: { token },
-        },
-      );
+  backendUrl + "/api/product/add",
+  formData,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
 
       if(response.data.success){
         toast.success(response.data.message)
